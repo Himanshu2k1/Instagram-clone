@@ -1,0 +1,100 @@
+{
+  "posts": [
+    {
+      "id": 3,
+      "img": "https://source.unsplash.com/random?wallpapers",
+      "caption": "hello",
+      "user": "himanshu.sharma2@q3tech.com",
+      "comments": [
+        {
+          "id": "himanshu.sharma2@q3tech.com",
+          "body": "some comment"
+        },
+        {
+          "id": "himanshu.sharma1@q3tech.com",
+          "body": "add comment working!"
+        },
+        {
+          "id": "himanshu.sharma1@q3tech.com",
+          "body": "hello himanshu"
+        }
+      ],
+      "likes": [
+        "himanshu.sharma1@q3tech.com",
+        "himanshu@gmail.com"
+      ]
+    },
+    {
+      "id": 4,
+      "img": "https://source.unsplash.com/random?wallpapers",
+      "caption": "HII",
+      "user": "himanshu.sharma2@q3tech.com",
+      "comments": [
+        {
+          "id": "himanshu.sharma2@q3tech.com",
+          "body": "some comment"
+        },
+        {
+          "id": "himanshu@gmail.com",
+          "body": "lets comment"
+        }
+      ],
+      "likes": [
+        "himanshu.sharma1@q3tech.com"
+      ]
+    },
+    {
+      "id": 5,
+      "img": "https://source.unsplash.com/random?wallpapers",
+      "caption": "check working of new post",
+      "user": "himanshu.sharma2@q3tech.com",
+      "comments": [],
+      "likes": []
+    },
+    {
+      "id": 8,
+      "img": "https://source.unsplash.com/random?wallpapers",
+      "caption": "himanshu sharma",
+      "user": "himanshu.sharma1@q3tech.com",
+      "comments": [
+        {
+          "id": "himanshu@gmail.com",
+          "body": "keydown comment"
+        }
+      ],
+      "likes": []
+    },
+    {
+      "id": 10,
+      "img": "https://source.unsplash.com/random?wallpapers",
+      "caption": "hello 10",
+      "user": "himanshu.sharma1@q3tech.com",
+      "comments": [],
+      "likes": []
+    },
+    {
+      "id": 12,
+      "img": "https://source.unsplash.com/random?wallpapers",
+      "caption": "hello13",
+      "user": "himanshu.sharma1@q3tech.com",
+      "comments": [],
+      "likes": []
+    },
+    {
+      "id": 13,
+      "img": "https://source.unsplash.com/random?wallpapers",
+      "caption": "hello 14",
+      "user": "himanshu.sharma1@q3tech.com",
+      "comments": [],
+      "likes": []
+    },
+    {
+      "id": 14,
+      "img": "https://source.unsplash.com/random?wallpapers",
+      "caption": "Post added to himanshu@gmail.com",
+      "user": "himanshu@gmail.com",
+      "comments": [],
+      "likes": []
+    }
+  ]
+}

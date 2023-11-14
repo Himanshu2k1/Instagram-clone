@@ -1,0 +1,146 @@
+{
+  "users": [
+    {
+      "id": "himanshu.sharma1@q3tech.com",
+      "img": "https://source.unsplash.com/random?wallpapers",
+      "fname": "himanshu",
+      "lname": "sharma",
+      "email": "himanshu.sharma1@q3tech.com",
+      "password": "12345678",
+      "followers": [
+        {
+          "followers_list": []
+        }
+      ],
+      "following": [
+        {
+          "following_list": [
+            "sharmahimanshu1101@gmail.com",
+            "abc@q3tech.com",
+            "himanshu.sharma2@q3tech.com",
+            "hs@gmail.com"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "himanshu.sharma2@q3tech.com",
+      "img": "https://source.unsplash.com/random?wallpapers",
+      "fname": "himanshu2",
+      "lname": "sharma2",
+      "email": "himanshu.sharma2@q3tech.com",
+      "password": "12345678",
+      "followers": [
+        {
+          "followers_list": [
+            "himanshu.sharma1@q3tech.com",
+            "sharmahimanshu1101@gmail.com"
+          ]
+        }
+      ],
+      "following": [
+        {
+          "following_list": [
+            "himanshu.sharma1@q3tech.com"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sharmahimanshu1101@gmail.com",
+      "img": "https://source.unsplash.com/random?wallpapers",
+      "fname": "himanshu",
+      "lname": "sharma",
+      "email": "sharmahimanshu1101@gmail.com",
+      "password": "1234",
+      "followers": [
+        {
+          "followers_list": []
+        }
+      ],
+      "following": [
+        {
+          "following_list": []
+        }
+      ]
+    },
+    {
+      "id": "hs@gmail.com",
+      "img": "https://source.unsplash.com/random?wallpapers",
+      "fname": "h",
+      "lname": "s",
+      "email": "hs@gmail.com",
+      "password": "sharma",
+      "followers": [
+        {
+          "followers_list": []
+        }
+      ],
+      "following": [
+        {
+          "following_list": []
+        }
+      ]
+    },
+    {
+      "id": "abc@q3tech.com",
+      "img": "https://source.unsplash.com/random?wallpapers",
+      "fname": "abc",
+      "lname": "abcd",
+      "email": "abc@q3tech.com",
+      "password": "12345678",
+      "followers": [
+        {
+          "followers_list": []
+        }
+      ],
+      "following": [
+        {
+          "following_list": []
+        }
+      ]
+    },
+    {
+      "id": "test@gmail.com",
+      "img": "https://source.unsplash.com/random?wallpapers",
+      "fname": "test",
+      "lname": "test",
+      "email": "test@gmail.com",
+      "password": "test",
+      "followers": [
+        {
+          "followers_list": []
+        }
+      ],
+      "following": [
+        {
+          "following_list": []
+        }
+      ]
+    },
+    {
+      "id": "himanshu@gmail.com",
+      "img": "https://source.unsplash.com/random?wallpapers",
+      "fname": "Himanshu",
+      "lname": "Sharma",
+      "email": "himanshu@gmail.com",
+      "password": "1234",
+      "followers": [
+        {
+          "followers_list": [
+            "himanshu.sharma2@q3tech.com"
+          ]
+        }
+      ],
+      "following": [
+        {
+          "following_list": [
+            "test@gmail.com",
+            "abc@q3tech.com",
+            "himanshu.sharma1@q3tech.com"
+          ]
+        }
+      ]
+    }
+  ]
+}
