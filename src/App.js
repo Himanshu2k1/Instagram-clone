@@ -5,6 +5,7 @@ import Home from './pages/home/Home';
 import Registration from './pages/registration/Registration';
 import Profile from './pages/profile/Profile';
 import Newpost from './pages/post/Newpost';
+import RequireAuth from './pages/RequireAuth';
 import { useMediaQuery } from '@mui/material';
 
 function App() {
@@ -14,10 +15,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Login />}></Route>
-        <Route path='/home/:userId' element={<Home />}></Route>
+        <Route path='/home/:userId' element={<RequireAuth><Home /></RequireAuth>}></Route>
         <Route path='/register' element={<Registration />}></Route>
-        <Route path='/profile/:userId' element={<Profile />}></Route>
-        <Route path='/newpost/:userId' element={<Newpost />}></Route>
+        <Route path='/profile/:userId' element={<RequireAuth><Profile /></RequireAuth>}></Route>
+        <Route path='/newpost/:userId' element={<RequireAuth><Newpost /></RequireAuth>}></Route>
       </Routes>
     </BrowserRouter>
   );

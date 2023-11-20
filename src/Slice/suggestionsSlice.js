@@ -26,35 +26,68 @@ export const suggestionsSlice = createSlice({
     followed: (state, action) => {
         const { userId, email } = action.payload;
         const user = state.users.find(user => user.id === userId);
+        const targetUser = state.users.find(user => user.id === email); 
         if (user) {
             if (!user.following[0].following_list.includes(email)) {
               user.following[0].following_list.push(email);
+              targetUser.followers[0].followers_list.push(userId);
               axios.put(`${baseURL}/users/${userId}`, user);
+              axios.put(`${baseURL}/users/${email}`, targetUser);
             }
         }
     },
     unfollowed: (state,action)=>{
       const { userId, email } = action.payload;
         const user = state.users.find(user => user.id === userId);
+        const targetUser = state.users.find(user => user.id === email); 
         if (user) {
             if (user.following[0].following_list.includes(email)) {
               const index=user.following[0].following_list.indexOf(email);
               user.following[0].following_list.splice(index,1)
+              const index2=targetUser.followers[0].followers_list.indexOf(email);
+              targetUser.followers[0].followers_list.splice(index2,1)
               axios.put(`${baseURL}/users/${userId}`, user);
+              axios.put(`${baseURL}/users/${email}`, targetUser);
             }
         }        
     },
     removed: (state,action)=>{
       const { userId, email } = action.payload;
         const user = state.users.find(user => user.id === userId);
+        const targetUser = state.users.find(user => user.id === email); 
         if (user) {
             if (user.followers[0].followers_list.includes(email)) {
-              const index=user.following[0].following_list.indexOf(email);
+              const index=user.followers[0].followers_list.indexOf(email);
               user.followers[0].followers_list.splice(index,1)
+              const index2=targetUser.following[0].following_list.indexOf(email);
+              targetUser.following[0].following_list.splice(index2,1)
               axios.put(`${baseURL}/users/${userId}`, user);
+              axios.put(`${baseURL}/users/${email}`, targetUser);
             }
         }
+    },
+    updated: (state, action) => {
+      const { id, email, fname, lname, bio } = action.payload;
+      const userIndex = state.users.findIndex(user => user.id === id);
+      console.log("            ",userIndex);
+      if (userIndex !== -1) {
+        const updatedUser = { ...state.users[userIndex] };
+        if (email) updatedUser.email = email;
+        if (fname) updatedUser.fname = fname;
+        if (lname) updatedUser.lname = lname;
+        if (bio) updatedUser.bio = bio;
+        const updatedUsers = [...state.users];
+        updatedUsers[userIndex] = updatedUser;
+        axios.put(`${baseURL}/users/${id}`, updatedUser);
+        return {
+          ...state,
+          users: updatedUsers,
+        }
+      }
+      return state;
+      
     }
+    
   },
   extraReducers(builder) {
     builder
@@ -88,5 +121,5 @@ export const suggestionsSlice = createSlice({
   },
 });
 
-export const { followed, unfollowed, removed } = suggestionsSlice.actions;
+export const { followed, unfollowed, removed, updated } = suggestionsSlice.actions;
 export default suggestionsSlice.reducer;

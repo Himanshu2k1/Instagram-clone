@@ -2,6 +2,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import validator from 'validator';
 
 // api
 import api from '../../api/login'
@@ -14,7 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 // importing store-access and reducer
 import { useSelector, useDispatch } from 'react-redux';
-import { login } from '../../Slice/userSlice';
+import { login, valid } from '../../Slice/userSlice';
 
 // copyright
 function Copyright(props) {
@@ -37,10 +38,11 @@ function Login() {
 // using the store to save and get logger details.
     const dispatch = useDispatch();
     const logger=useSelector((state)=>state.user)
-    console.log('check logger',logger)
+    // console.log('check logger',logger)
 
     const navigate=useNavigate();
     const [users,setUsers]=useState([])
+    const [emailError, setEmailError] = useState('');
 
 // to fetch data from JSON server using Axios
   useEffect(()=>{
@@ -55,7 +57,17 @@ function Login() {
       }
       fetchUsers();
   },[dispatch])
-console.log('json server working',users);
+// console.log('json server working',users);
+
+const validateEmail = (e) => {
+  var email = e.target.value 
+
+  if (validator.isEmail(email)) { 
+    setEmailError('Valid Email Type :)'); 
+  } else { 
+    setEmailError('Enter valid Email!'); 
+  } 
+}
 
 // on submitting login data, comparing with database
   const handleSubmit = (event) => {
@@ -72,6 +84,7 @@ console.log('json server working',users);
     var flag=false
     users.forEach((user)=>{
         if(user.email===obj.email && user.password===obj.password){
+            dispatch(valid())
             flag=true
             navigate(`/home/:${user.email}`)
         }
@@ -81,10 +94,6 @@ console.log('json server working',users);
         navigate('/')
     }
 };
-
-if(logger && logger.length!==0 ){
-    console.log("hello",logger);
-}
 
 return (
     <ThemeProvider theme={defaultTheme}>
@@ -96,7 +105,7 @@ return (
           sm={4}
           md={6}
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
+            backgroundImage:'url(https://source.unsplash.com/random?wallpapers)',
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -136,7 +145,13 @@ return (
                 name="email"
                 autoComplete="email"
                 autoFocus
+                onChange={(e)=>validateEmail(e)}
               />
+              {emailError === '' ? null : 
+                    <span style={{ 
+                        fontWeight: 'lighter', 
+                        color: emailError==='Valid Email Type :)' ? 'green': 'red', 
+                    }}>{emailError}</span>}
               <TextField
                 margin="normal"
                 required

@@ -23,25 +23,22 @@ export const postsSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {
-    posted: (state, action) => {
-      const maxId = state.posts.reduce((max, post) => (post.id > max ? post.id : max), 0);
+    posted: async (state, action) => {
+      try {
+        const maxId = state.posts.reduce((max, post) => (post.id > max ? post.id : max), 0);
         const newPost = {
-            id: maxId+1,
-            img: action.payload.img,
-            caption: action.payload.Caption,
-            user: action.payload.user,
-            comments: [],
-            likes: []
+          id: maxId + 1,
+          img: action.payload.img,
+          caption: action.payload.Caption,
+          user: action.payload.user,
+          comments: [],
+          likes: [],
         };
-       // Add the new post to the state
-       axios.post(`${baseURL}/posts`, newPost)
-        .then((response) => {
-          state.posts.push(response.data); // Add the new post to the state
-        })
-        .catch((err) => {
+        const response = await axios.post(`${baseURL}/posts`, newPost);
+        state.posts.push(response.data);
+      } catch (err) {
         console.error('Error adding a new post:', err);
-        });
-
+      }
     },
     liked: (state, action) => {
         const { postId, email } = action.payload;

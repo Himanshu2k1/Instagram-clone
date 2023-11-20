@@ -1,10 +1,8 @@
 import * as React from 'react';
 import {AspectRatio, Avatar, Box, Card, CardContent, CardOverflow, Link, IconButton, Input, Typography} from '@mui/joy';
-
 import MessageIcon from '@mui/icons-material/Message';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-
 import { liked, commented} from '../../Slice/postsSlice';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -13,12 +11,20 @@ import { useDispatch} from 'react-redux';
 import {useState } from 'react';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-
-
-function PostComponent({post , logger, logger_followers}) {
+function PostComponent({post , logger, logger_data, suggestions}) {
     const dispatch=useDispatch();
+    const post_dp=suggestions.users.filter(user=>user.email===post.user)
+    console.log("          ",post_dp);
     const [newComment,setNewComment]=useState('');
+    const [displayedComments, setDisplayedComments] = useState(1);
     const isXsScreen = useMediaQuery('(max-width:600px)');
+
+    const handleLoadMoreComments = () => {
+      setDisplayedComments((prev) => prev + 2);
+    };
+    const handleHideComments = () => {
+      setDisplayedComments(1);
+    };
   return (
     <Card
       id={post.user}
@@ -50,12 +56,12 @@ function PostComponent({post , logger, logger_followers}) {
         >
           <Avatar
             size="sm"
-            src={post.img}
+            src={post_dp[0]?post_dp[0].img : ''}
           />
         </Box>
-        <Typography fontWeight="lg" fontSize={ isXsScreen ? 13 : 18}>{post.user}</Typography>
-        {logger_followers[0] && !logger_followers[0].following[0].following_list.includes(post.user) ? (
-        <IconButton variant="plain" color='success' size="sm" sx={{ ml: 'auto' }} onClick={()=>dispatch(followed({userId:logger.email,email:post.user}))} title="Follow">
+        <Typography color='primary' fontWeight="lg" fontSize={ isXsScreen ? 13 : 18}>{post.user}</Typography>
+        {logger_data[0] && !logger_data[0].following[0].following_list.includes(post.user) ? (
+        <IconButton variant="plain" color='primary' size="sm" sx={{ ml: 'auto' }} onClick={()=>dispatch(followed({userId:logger.email,email:post.user}))} title="Follow">
           <AddCircleOutlineIcon />
         </IconButton>
         ) :
@@ -69,7 +75,7 @@ function PostComponent({post , logger, logger_followers}) {
       </CardContent>
       <CardOverflow>
         <AspectRatio>
-          <img src='https://source.unsplash.com/random?wallpapers' alt="" loading="lazy" />
+          <img src={post.img} alt="" loading="lazy" />
         </AspectRatio>
       </CardOverflow>
       <CardContent orientation="horizontal" sx={{ alignItems: 'center', mx: -1 }}>
@@ -86,16 +92,16 @@ function PostComponent({post , logger, logger_followers}) {
         <Typography fontSize={ isXsScreen ? 13 : 18}>
           <Link
             component="button"
-            color="neutral"
+            color='primary'
             fontWeight="lg"
-            textColor="text.primary"
+            // textColor="text.primary"
           >
           {post.user}
-          </Link>{' '}
-           {post.caption}
+          </Link>
+          { } {post.caption}
         </Typography>
       <Typography fontSize={ isXsScreen ? 12 : 16}>
-        {post.comments.map(comment=>(
+      {post.comments.slice(0, displayedComments).map((comment) => (
           <div>
           <Typography> 
             <Link
@@ -113,6 +119,13 @@ function PostComponent({post , logger, logger_followers}) {
         ))}
       </Typography>
       </CardContent>
+      {post.comments.length > displayedComments && (        
+        <Link component='button' fontWeight='lg' fontSize={isXsScreen ? 9 : 11} onClick={handleLoadMoreComments}>Load More Comments</Link>
+      )}
+      {displayedComments>2 && (        
+        <Link component='button' fontWeight='lg' fontSize={isXsScreen ? 9 : 11} onClick={handleHideComments}>Hide Comments</Link>
+      )}
+
       <CardContent orientation="horizontal" sx={{ gap: 1 }}>
         {/* <IconButton size="sm" variant="plain" sx={{ ml: -1 }}> */}
           <MessageIcon size={ isXsScreen ? "xs" : "lg"} />
@@ -128,7 +141,9 @@ function PostComponent({post , logger, logger_followers}) {
           onKeyDown={(event)=>{
             if(event.key === 'Enter' && newComment.trim() !== ''){
               dispatch(commented({ postId: post.id, email: logger.email, body:newComment}));
-              setNewComment('')}
+              setNewComment('')
+              setDisplayedComments(1)
+              }
             }
           }
         />
@@ -136,7 +151,9 @@ function PostComponent({post , logger, logger_followers}) {
          onClick={() => {
           if (newComment.trim() !== ''){
             dispatch(commented({ postId: post.id, email: logger.email, body:newComment}));
-            setNewComment('')}}
+            setNewComment('')
+            setDisplayedComments(1)
+          }}
           }
          >
           Post

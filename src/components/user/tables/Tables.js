@@ -3,12 +3,12 @@ import Followers from './tableParts/Followers';
 import Following from './tableParts/Following';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import useMediaQuery from '@mui/material/useMediaQuery';
+import { useMediaQuery} from '@mui/material';
 
 import {Card, Typography} from '@mui/joy';
 
 function Tables() {
-  const isXsScreen = useMediaQuery('(max-width:600px)');
+  const isXsScreen = useMediaQuery('(max-width:900px)');
   console.log("is small screen",isXsScreen)
   return (
   <Box sx={{maxWidth:'100vw'}}>

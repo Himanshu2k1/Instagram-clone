@@ -1,13 +1,11 @@
+
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-
-
 import {Avatar, Button,CssBaseline, TextField, Link, Grid, Box, Typography, Container} from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-
 import { posted } from '../../Slice/postsSlice';
 import { useParams } from 'react-router-dom';
 
@@ -44,9 +42,21 @@ function Newpost() {
   const navigate=useNavigate();
   const dispatch=useDispatch();
   const [caption,setCaption]=useState('');
-  const userId=useParams()
+  const [image,setImage]=useState();
+  const userId=useParams();
   const logger=userId.userId.slice(1);
-  console.log("logger in add post ",logger)
+  console.log("logger in add post ",logger);
+  
+  const convert2base64 = (e) => {
+      console.log(e.target.files[0]);
+      const file=e.target.files[0];
+      const reader=new FileReader();
+
+      reader.onloadend=()=>{
+        setImage(reader.result.toString());
+      };
+      reader.readAsDataURL(file);
+  }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -72,7 +82,7 @@ function Newpost() {
               <Grid item xs={12} ml={15}>
                 <Button component="label" variant="contained" startIcon={<CloudUploadIcon />}>
                   Upload Image
-                  <VisuallyHiddenInput type="file" />
+                  <VisuallyHiddenInput type="file" id="imageUploaded" onChange={(e)=>convert2base64(e)}/>
                 </Button>
               </Grid>
 
@@ -100,7 +110,7 @@ function Newpost() {
               onClick={(e)=>{
                e.preventDefault(); 
                dispatch(posted({
-               img:"https://source.unsplash.com/random?wallpapers",
+               img:image,
                Caption:caption,
                user:logger
             }))

@@ -13,6 +13,8 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import { useNavigate} from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { valid } from '../../Slice/userSlice';
 
 const drawerWidth = 150;
 
@@ -45,7 +47,8 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function DrawerNav({isHomeActive,isProfileActive,userId}) {
-    const navigate=useNavigate();
+  const navigate=useNavigate();
+  const dispatch=useDispatch();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -60,32 +63,13 @@ export default function DrawerNav({isHomeActive,isProfileActive,userId}) {
   return (
     <Box sx={{ display: 'flex' , maxHeight:'30px'}}>
       <CssBaseline />
-        <IconButton
-        color="inherit"
-        aria-label="open drawer"
-        edge="end"
-        onClick={handleDrawerOpen}
-        sx={{ ...(open && { display: 'none' }) , '&:hover':{
-
-        }}}
-        >
-        <MenuIcon />
+        <IconButton color="inherit" aria-label="open drawer" edge="end" onClick={handleDrawerOpen} sx={{ ...(open && { display: 'none' }) , '&:hover':{}}}>
+          <MenuIcon />
         </IconButton>
       <Main open={open}>
         <DrawerHeader />
       </Main>
-      <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: drawerWidth,
-          },
-        }}
-        variant="persistent"
-        anchor="right"
-        open={open}
-      >
+      <Drawer sx={{width: drawerWidth, flexShrink: 0, '& .MuiDrawer-paper': { width: drawerWidth}}} variant="persistent" anchor="right" open={open}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
@@ -102,7 +86,7 @@ export default function DrawerNav({isHomeActive,isProfileActive,userId}) {
                       },
                       textAlign: 'center' 
                     }}
-                    onClick={()=>navigate(`/home/${userId.userId}`)}>
+                    onClick={()=>navigate(`/home/${userId}`)}>
             <ListItemText primary="Home" />
           </ListItemButton>
         </ListItem>
@@ -115,11 +99,11 @@ export default function DrawerNav({isHomeActive,isProfileActive,userId}) {
                       },
                       textAlign: 'center' 
                     }}
-                    onClick={()=>navigate(`/profile/${userId.userId}`)}>
+                    onClick={()=>navigate(`/profile/${userId}`)}>
             <ListItemText primary="Profile" />
           </ListItemButton>
         </ListItem>
-        <ListItem key="Register" disablePadding>
+        {/* <ListItem key="Register" disablePadding>
           <ListItemButton sx={{backgroundColor : 'black',
                       color : 'white',
                       '&:hover':{
@@ -131,7 +115,7 @@ export default function DrawerNav({isHomeActive,isProfileActive,userId}) {
                     onClick={()=>navigate('/register')}>
             <ListItemText primary="New Account" />
           </ListItemButton>
-        </ListItem>
+        </ListItem> */}
         <ListItem key="Logout" disablePadding>
           <ListItemButton sx={{backgroundColor : 'black',
                       color : 'white',
@@ -139,7 +123,9 @@ export default function DrawerNav({isHomeActive,isProfileActive,userId}) {
                         boxShadow:1,
                         backgroundColor: 'black'
                       },
-                      textAlign: 'center' }} onClick={()=>navigate('/')}>
+                      textAlign: 'center' }} onClick={()=>{
+                        dispatch(valid())
+                        navigate('/')}}>
             <ListItemText primary="Logout" />
           </ListItemButton>
         </ListItem>

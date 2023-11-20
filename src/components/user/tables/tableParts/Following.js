@@ -2,10 +2,8 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import {Chip} from '@mui/joy';
 import {Table, TableBody, TableCell,TableContainer,TableHead,TableRow} from '@mui/material';
-
 import {Paper} from '@mui/material';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
-
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { unfollowed, fetchSuggestions } from '../../../../Slice/suggestionsSlice';
@@ -17,14 +15,10 @@ function Following({isXsScreen}) {
   const userId = useParams();
   const email = userId.userId.slice(1);
   const profile=profiles.users.filter(user=>user.email===email)
-  // console.log("all users for profile",profile);
-  // const [profile, setProfile] = useState([]);
 
   useEffect(() => {
     dispatch(fetchSuggestions())
   }, [dispatch]);
-  // console.log('from profile page',profile)
-  // console.log("posts fetched after updation",posts)
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column'}}>

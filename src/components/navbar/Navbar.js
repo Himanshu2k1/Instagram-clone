@@ -1,20 +1,22 @@
 import React from 'react'
-import "./Navbar.css"
 import { AppBar, Toolbar, IconButton, Typography} from '@mui/material'
 import InstagramIcon from '@mui/icons-material/Instagram';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import StackNav from './StackNav';
 
-import { useNavigate, useLocation } from 'react-router-dom';
+// stack and drawer navbars
+import StackNav from './StackNav';
 import DrawerNav from './DrawerNav';
 
-function Navbar(userId) {
+import { useMediaQuery } from '@mui/material'
+
+import { useNavigate, useLocation } from 'react-router-dom';
+
+
+function Navbar({userId}) {
   const navigate=useNavigate();
   const location = useLocation();
-  const isHomeActive = location.pathname === `/home/${userId.userId}`;
-  const isProfileActive = location.pathname === `/profile/${userId.userId}`;
-
-  const isXsScreen = useMediaQuery('(max-width:600px)');
+  const isHomeActive = location.pathname === `/home/${userId}`;
+  const isProfileActive = location.pathname === `/profile/${userId}`;
+  const isXsScreen = useMediaQuery('(max-width:900px)');
   return (
     <AppBar color='primary' position='sticky'>
       <Toolbar>
